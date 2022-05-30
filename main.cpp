@@ -16,7 +16,7 @@ int main(){
 	time_t now = time(0);
 	tm *ltm = localtime(&now);
 	int year=1900+ltm->tm_year;
-	cout<<"Copyright (C)"<<year<<" Kiki Tan"<<endl;
+	cout<<"Copyright (C) "<<year<<" Kiki Tan"<<endl;
         cout<<"SKFP v0.1 Alpha"<<endl;
         cout<<"SKFP没有任何保证，了解更多请到GitHub页面查看更多."<<endl;
         cout<<"这是一个自由软件，欢迎再次分发本程序，但要满足一定条件."<<endl;
