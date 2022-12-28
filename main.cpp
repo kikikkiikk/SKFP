@@ -50,11 +50,12 @@ int main(){
 	    		t=a[r];
 	    		ss++;
 	    	}
-	        cout<<out.length();
+	        cout<<"当前字数："<<out.length()<<endl;;
 	    }
     OutFile<<out;
 	readfile.close();
 	cout<<"生成完毕，文件保存在目录下的jiantao.txt。感谢你的使用。"<<endl;
+	cout<<"最终文件字数："<<out.length()<<endl;
 	system("pause");
 	return 0;
 }
