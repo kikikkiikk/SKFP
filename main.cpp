@@ -7,74 +7,94 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 Also add information on how to contact you by electronic and paper mail.
 */
-#include<iostream>
-#include<fstream>
-#include<cstring>
+#include <iostream>
+#include <fstream>
+#include <cstring>
 using namespace std;
 
 // 定义变量
 int count;
 time_t now = time(0);
 tm *ltm = localtime(&now);
-int year = 1900+ltm->tm_year;
+int year = 1900 + ltm->tm_year;
+string a[10240], t, out;
+int i = 1, s = 0;
+ifstream readfile("source");
 
 // 输出版权信息
 void printCopyrightInformation(int yearOfCopyright)
 {
-	cout<<"Copyright (C) "<<yearOfCopyright<<" Kiki Tan"<<endl;
-	cout<<"SKFP v0.1 Alpha"<<endl;
-    cout<<"SKFP没有任何保证，了解更多请到GitHub页面查看更多."<<endl;
-    cout<<"这是一个自由软件，欢迎再次分发本程序，但要满足一定条件."<<endl;
+	cout << "Copyright (C) " << yearOfCopyright << " Kiki Tan" << endl;
+	cout << "SKFP v0.1 Alpha" << endl;
+	cout << "SKFP没有任何保证，了解更多请到GitHub页面查看更多." << endl;
+	cout << "这是一个自由软件，欢迎再次分发本程序，但要满足一定条件." << endl;
 }
 
 // 获取检讨字数
 int getNumberOfWord()
 {
 	int numberOfWord;
-	cout<<"请输入检讨的字数：";
-	cin>>numberOfWord;
+	cout << "请输入检讨的字数：";
+	cin >> numberOfWord;
 	return numberOfWord;
 }
-int main(){
+int main()
+{
 	// 输出版权信息
 	printCopyrightInformation(year);
-	
-	// 获取检讨字数
-	count=getNumberOfWord();
 
-	string a[10240],t,out;
-	int i=1,s=0;
-	ifstream readfile("source");
-	ofstream OutFile("jiantao.txt");
-	while(!readfile.eof()){
-		readfile>>a[i];
-		i++;
-		s++;
+	// 获取检讨字数
+	count = getNumberOfWord();
+
+	while (!readfile.eof())
+	{
+		readfile >> a[i];
+		if (a[i].length() > 2){
+			char theFirstLetter = a[i].at(0);
+			cout<<theFirstLetter;
+			if (!(theFirstLetter == '#')){
+				i++;
+				s++;
+				cout<<"-y"<<endl;
+			}
+		}
+		else{
+			i++;
+			s++;
+		}
 	}
-	i=1;
-	readfile.seekg(0,ios::beg);
-	int ss=0,r;
-	srand((int)time(0)); 
-	while(out.length()<=count){
-    	r=rand()%s+1;
-    	if(a[rand()%s+1]==""){
-    		continue;
-    	}
-    	else{
-    		if(a[r]==t){
-	   			continue;
-	   		}else{
-	   			out+=a[r];
-	   		}
-	    		t=a[r];
-	    		ss++;
-	    	}
-	        cout<<"当前字数："<<out.length()<<endl;;
-	    }
-    OutFile<<out;
+	i = 1;
+	readfile.seekg(0, ios::beg);
+	int ss = 0, r;
+	srand((int)time(0));
+	while (out.length() <= count)
+	{
+		r = rand() % s + 1;
+		if (a[rand() % s + 1] == "")
+		{
+			continue;
+		}
+		else
+		{
+			if (a[r] == t)
+			{
+				continue;
+			}
+			else
+			{
+				out += a[r];
+			}
+			t = a[r];
+			ss++;
+		}
+		cout << "当前字数：" << out.length() << endl;
+		;
+	}
+	ofstream OutFile("jiantao.txt");
+	OutFile << out;
 	readfile.close();
-	cout<<"生成完毕，文件保存在目录下的jiantao.txt。感谢你的使用。"<<endl;
-	cout<<"最终文件字数："<<out.length()<<endl;
+	cout << "生成完毕，文件保存在目录下的jiantao.txt。感谢你的使用。" << endl;
+	cout << "最终文件字数：" << out.length() << endl;
 	system("pause");
 	return 0;
 }
