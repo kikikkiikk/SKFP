@@ -19,7 +19,6 @@ tm *ltm = localtime(&now);
 int year = 1900 + ltm->tm_year;
 string a[10240], t, out;
 int i = 1, s = 0;
-ifstream readfile("source");
 
 // 输出版权信息
 void printCopyrightInformation(int yearOfCopyright)
@@ -38,6 +37,31 @@ int getNumberOfWord()
 	cin >> numberOfWord;
 	return numberOfWord;
 }
+// 读入文件
+void readSourceFile(string FileName){
+	// 定义文件输入流
+	ifstream readfile(FileName);
+	// 将文件读入数组a
+	while (!readfile.eof())
+	{
+		// 读取文件并存入数组a
+		readfile >> a[i];
+		// 检测本句开头是否为#（注释），若是，停留在此，等待下一次读入数据的覆盖；若不是，正常读入数据并跳转到下一分量
+		// 如果仅有一个#存在，而不存在注释内容，#将被当作正常句子输入
+		if (a[i].length() >= 2){
+			char theFirstLetter = a[i].at(0);
+			if (!(theFirstLetter == '#')){
+				i++;
+				s++;
+			}
+		}
+		else{
+			i++;
+			s++;
+		}
+	}
+	readfile.close();
+}
 int main()
 {
 	// 输出版权信息
@@ -46,25 +70,9 @@ int main()
 	// 获取检讨字数
 	count = getNumberOfWord();
 
-	while (!readfile.eof())
-	{
-		readfile >> a[i];
-		if (a[i].length() > 2){
-			char theFirstLetter = a[i].at(0);
-			cout<<theFirstLetter;
-			if (!(theFirstLetter == '#')){
-				i++;
-				s++;
-				cout<<"-y"<<endl;
-			}
-		}
-		else{
-			i++;
-			s++;
-		}
-	}
-	i = 1;
-	readfile.seekg(0, ios::beg);
+	//读入文件
+	readSourceFile("source");
+
 	int ss = 0, r;
 	srand((int)time(0));
 	while (out.length() <= count)
@@ -92,7 +100,6 @@ int main()
 	}
 	ofstream OutFile("jiantao.txt");
 	OutFile << out;
-	readfile.close();
 	cout << "生成完毕，文件保存在目录下的jiantao.txt。感谢你的使用。" << endl;
 	cout << "最终文件字数：" << out.length() << endl;
 	system("pause");
