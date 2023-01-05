@@ -12,3 +12,4 @@ This program only have one file, you can just use this command to build it:
 ```bash
 g++ -o OutputFileName ./main.cpp
 ```
+You should ensure that the "source" file exists in the program directory.
