@@ -68,7 +68,7 @@ void printCopyrightInformation(int yearOfCopyright)
 	cout << BLUE << "----------------------------------" << endl;
 
 	// 版权（遵循GNU General Public License v2.0）
-	cout << NONE << "SKFP v0.2 Alpha" << endl;
+	cout << NONE << "SKFP v1.0 Release" << endl;
 	cout << "Copyright (C) " << yearOfCopyright << " Kiki Tan" << endl;
 	cout << "SKFP没有任何保证，了解更多请到GitHub页面查看更多." << endl;
 	cout << "这是一个自由软件，欢迎再次分发本程序，但要满足一定条件." << endl;
