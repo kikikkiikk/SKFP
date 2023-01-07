@@ -12,6 +12,7 @@ Also add information on how to contact you by electronic and paper mail.
 #include <cstring>
 #include <ctime>
 #include <stdio.h>
+#include <unistd.h>
 using namespace std;
 
 // 宏定义（彩色文字输出）
@@ -56,6 +57,7 @@ int i = 1, s = 0, ss = 0, r, temp;
 // 输出版权信息
 void printCopyrightInformation(int yearOfCopyright)
 {
+	// 名称字符画
 	cout << BLUE << "       ----------------------------------" << endl;
 	cout << BLUE << "      /  " << L_GREEN << "____   " << L_RED << "_  __ " << L_BLUE << "_____ " << L_PURPLE << "____       " << BLUE << "/" << endl;
 	cout << BLUE << "     /  " << L_GREEN << "/ ___| " << L_RED << "| |/ /" << L_BLUE << "|  ___" << L_PURPLE << "| _   \\    " << BLUE << "/" << endl;
@@ -64,6 +66,8 @@ void printCopyrightInformation(int yearOfCopyright)
 	cout << BLUE << "  /     " << L_GREEN << "|____/ " << L_RED << "|_|\\_\\" << L_BLUE << "|__|  " << L_PURPLE << "|_|     " << BLUE << "/" << endl;
 	cout << BLUE << " /                                /" << endl;
 	cout << BLUE << "----------------------------------" << endl;
+
+	// 版权（遵循GNU General Public License v2.0）
 	cout << NONE << "SKFP v0.2 Alpha" << endl;
 	cout << "Copyright (C) " << yearOfCopyright << " Kiki Tan" << endl;
 	cout << "SKFP没有任何保证，了解更多请到GitHub页面查看更多." << endl;
@@ -78,6 +82,7 @@ int getNumberOfWord()
 	cin >> numberOfWord;
 	return numberOfWord;
 }
+
 // 读入文件
 void readSourceFile(string FileName)
 {
@@ -107,6 +112,51 @@ void readSourceFile(string FileName)
 	}
 	readfile.close();
 }
+
+// 随机抽取并写入变量
+void chooseAndWriteToVariable(){
+	// 定义随机种子
+	srand(time(0));
+
+	// 抽取并写入变量
+	while (out.length() < count)
+	{
+		// 获取随机数
+		r = rand() % s + 1;
+
+		// 如果变量为空，则跳过此变量，否则写入字符串out
+		if (a[rand() % s + 1] == "")
+		{
+			continue;
+		}
+		else
+		{
+			// 如果与上一句重复，则跳过，否则写入
+			if (a[r] == t)
+			{
+				continue;
+			}
+			else
+			{
+				out += a[r];
+			}
+			t = a[r];
+			ss++;
+		}
+
+		// 输出当前字数
+		//cout << "当前字数：" << out.length() << endl;
+		printf("\033[u");
+		printf("\033[s");
+		float percent = (float)out.length()/(float)count*100.0;
+		cout << "[";
+		for(int i_ProgressBar = 0; i_ProgressBar < int(percent) / 5; i_ProgressBar++) cout<<"■";
+		for(int i_ProgressBar = 0; i_ProgressBar < 20 - (int(percent) / 5) ; i_ProgressBar++) printf(" ");
+		printf("\033[K");
+		cout << "]" << percent << "%";
+		sleep(0.5);
+	}
+}
 int main()
 {
 	// 输出版权信息
@@ -121,35 +171,15 @@ int main()
 	// 读入文件
 	readSourceFile("source");
 
-	int ss = 0, r;
-	srand((int)time(0));
-	while (out.length() <= count)
-	{
-		r = rand() % s + 1;
-		if (a[rand() % s + 1] == "")
-		{
-			continue;
-		}
-		else
-		{
-			if (a[r] == t)
-			{
-				continue;
-			}
-			else
-			{
-				out += a[r];
-			}
-			t = a[r];
-			ss++;
-		}
-		cout << "当前字数：" << out.length() << endl;
-	}
+	// 随机抽取并写入变量
+	chooseAndWriteToVariable();
+
+
 	ofstream OutFile("jiantao.txt");
 	OutFile << out;
 	OutFile.close();
 	clock_t end_time = clock();
-	cout << "生成完毕，文件保存在目录下的jiantao.txt。感谢你的使用。" << endl;
+	cout << endl<<"生成完毕，文件保存在目录下的jiantao.txt。感谢你的使用。" << endl;
 	cout << "最终文件字数：" << out.length() << endl;
 	cout << "耗时：" << static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC * 1000 << "ms" << endl;
 	cout << "请按回车键继续...";
