@@ -1,7 +1,7 @@
 # SKFP
 ### SKFP - A self-criticism generator with a lot of garbage  
 
-## How to use
+## Usage
 Open the program, input how many words do you want, press <kbd>Enter</kbd>, you will see a "jiantao.txt" in the directory where the main program is.
 
 ## Change the sentences for generating
