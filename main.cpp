@@ -117,6 +117,9 @@ void readSourceFile(string FileName)
 void chooseAndWriteToVariable(){
 	// 定义随机种子
 	srand(time(0));
+	
+	// 清屏，否则进度条有bug
+	system("clear");
 
 	// 抽取并写入变量
 	while (out.length() < count)
