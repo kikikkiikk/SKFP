@@ -160,6 +160,15 @@ void chooseAndWriteToVariable(){
 		sleep(0.5);
 	}
 }
+
+void writeToOutputFile(string Filename)
+{
+	ofstream OutFile(Filename);
+	OutFile << out;
+	OutFile.close();
+}
+
+
 int main()
 {
 	// 输出版权信息
@@ -177,11 +186,13 @@ int main()
 	// 随机抽取并写入变量
 	chooseAndWriteToVariable();
 
+	// 输出到文件
+	writeToOutputFile("jiantao.txt");
 
-	ofstream OutFile("jiantao.txt");
-	OutFile << out;
-	OutFile.close();
+	// 结束计时
 	clock_t end_time = clock();
+
+
 	cout << endl<<"生成完毕，文件保存在目录下的jiantao.txt。感谢你的使用。" << endl;
 	cout << "最终文件字数：" << out.length() << endl;
 	cout << "耗时：" << static_cast<double>(end_time - start_time) / CLOCKS_PER_SEC * 1000 << "ms" << endl;
