@@ -8,8 +8,8 @@
 使用一个文本编辑器打开"source"文件，你可以手动输入生成用句子，使用回车或空格分隔。
 
 ## 手动构建
-此程序仅有一个源文件，可以使用此命令构建。
+你可以使用此命令构建。
 ```bash
-g++ -o OutputFileName ./main.cpp
+make && sudo make install
 ```
 程序运行时，请确保程序目录下存在source文件。
